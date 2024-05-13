@@ -1,5 +1,5 @@
 import Hero from "./components/Hero";
-import Newest from "./components/newest";
+import Newest from "./components/Newest";
 
 export default function Home() {
   return (
