@@ -1,55 +1,46 @@
-import Link from "next/link";
 import { client } from "../lib/sanity";
-import { ArrowRight } from "lucide-react";
+import Link from "next/link";
 import Image from "next/image";
 
 async function getData() {
-  const query = `*[_type =="product"][0...4] | order(_createdAt asc){
-        _id,
+  const query = `*[_type == "product"]
+      {
+        name,
           price,
-          name,
-          "slug":slug.current,
-          "category":category->name,
-          "imageUrl":image[0].asset->url
+          _id,
+          "imageUrl": image[0].asset->url,
+          "slug": slug.current,
+          "category": category->name
       }`;
 
   const data = await client.fetch(query);
 
   return data;
 }
-export default async function Newest() {
+
+export default async function CategoryPage({ params }) {
   const data = await getData();
+
   return (
     <div className="bg-white">
       <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
         <div className="flex justify-between items-center">
           <h2 className="text-2xl font-bold tracking-tight text-gray-900">
-            Newest Products
+            All Products
           </h2>
-
-          <Link
-            className="text-primary flex items-center gap-x-1"
-            href={"/all"}
-          >
-            {" "}
-            See all{" "}
-            <span>
-              <ArrowRight />
-            </span>
-          </Link>
         </div>
-        <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8 ">
+        <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
           {data.map((product) => (
             <div
               key={product._id}
               className="group relative lg:hover:scale-110 sm:hover:opacity-75"
             >
-              <div className="aspect-square w-full overflow-hidden rounded-md bg-gray-200  lg:h-80">
+              <div className="aspect-square w-full overflow-hidden rounded-md bg-gray-200 group-hover:opacity-75 lg:h-80">
                 <Link href={`/product/${product.slug}`}>
                   <Image
                     src={product.imageUrl}
                     alt="product image"
-                    className="w-full h-full object-center object-cover lg:h-full lg:w-full "
+                    className="w-full h-full object-center object-cover lg:h-full lg:w-full"
                     width={300}
                     height={300}
                   />

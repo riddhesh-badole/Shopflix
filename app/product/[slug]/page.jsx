@@ -62,6 +62,7 @@ export default async function ProductPage({ params }) {
                 price={data.price}
                 key={data._id}
               />
+
               <Button variant={"secondary"}>Checkout now</Button>
             </div>
             <p className="mt-12 text-base text-gray-500 tracking-wide">

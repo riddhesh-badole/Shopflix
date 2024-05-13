@@ -3,9 +3,9 @@ import Newest from "./components/newest";
 
 export default function Home() {
   return (
-   <div>
-      <Hero/>
-      <Newest/>
-   </div>
-  )
+    <div>
+      <Hero />
+      <Newest />
+    </div>
+  );
 }

@@ -4,13 +4,14 @@ import Image from "next/image";
 
 async function getData(category) {
   const query = `*[_type == "product" && category->name == "${category}"]
-    {
-      name,
-        price,
-        "imageUrl": image[0].asset->url,
-        "slug": slug.current,
-        "category": category->name
-    }`;
+  {
+    name,
+      price,
+      _id,
+      "imageUrl": image[0].asset->url,
+      "slug": slug.current,
+      "categoryName": category->name
+  }`;
 
   const data = await client.fetch(query);
 
@@ -30,15 +31,20 @@ export default async function CategoryPage({ params }) {
         </div>
         <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
           {data.map((product) => (
-            <div key={product._id} className="group relative">
-              <div className="aspect-square w-full overflow-hidden rounded-md bg-gray-200 group-hover:opacity-75 lg:h-80">
-                <Image
-                  src={product.imageUrl}
-                  alt="product image"
-                  className="w-full h-full object-center object-cover lg:h-full lg:w-full"
-                  width={300}
-                  height={300}
-                />
+            <div
+              key={product._id}
+              className="group relative lg:hover:scale-110 sm:hover:opacity-75"
+            >
+              <div className="aspect-square w-full overflow-hidden rounded-md bg-gray-200  lg:h-80">
+                <Link href={`/product/${product.slug}`}>
+                  <Image
+                    src={product.imageUrl}
+                    alt="product image"
+                    className="w-full h-full object-center object-cover lg:h-full lg:w-full"
+                    width={300}
+                    height={300}
+                  />
+                </Link>
               </div>
               <div className="mt-4 flex justify-between">
                 <div>
@@ -47,8 +53,9 @@ export default async function CategoryPage({ params }) {
                       {product.name}
                     </Link>
                   </h3>
+
                   <p className="mt-1 text-sm text-gray-500">
-                    {product.category}
+                    {product.categoryName}
                   </p>
                 </div>
                 <p className="text-sm font-medium text-gray-900">
