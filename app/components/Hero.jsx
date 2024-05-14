@@ -3,6 +3,7 @@ import { client, urlFor } from "../lib/sanity";
 import Link from "next/link";
 
 async function getData() {
+  await new Promise((resolve) => setTimeout(resolve, 3000));
   const query = "*[_type == 'heroimage'][0]";
 
   const data = await client.fetch(query);
