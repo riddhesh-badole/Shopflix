@@ -6,8 +6,8 @@ export default function CartServise({ children }) {
       mode="payment"
       cartMode="client-only"
       stripe={process.env.NEXT_PUBLIC_STRIPE_KEY}
-      successUrl="http://localhost:3000/sucesss"
-      cancelUrl="http://localhost:3000/error"
+      successUrl="https://shopflix-one.vercel.app/sucesss"
+      cancelUrl="https://shopflix-one.vercel.app/error"
       currency="INR"
       billingAddressCollection={true}
       shouldPersist={true}
